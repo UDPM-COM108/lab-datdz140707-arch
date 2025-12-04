@@ -148,18 +148,38 @@ int main(){
             case 6:
             printf("6.tinh lay suat ngan hang vay tra gop\n");
             int tienVay;
-            int thoiHan
             printf("nhap vao so tien can vay:");
             scanf("%d", &tienVay);
+
             //tinh lai suat
-            if(thoiHan<12){
-            float laiSuat=tienVay * 0.5;
-            }else if()
-                
-            
+            for(int i=1;i<=12;i++){
+            float gocMoiThang = tienVay / 12;
+            float soTienConlai = tienVay - gocMoiThang * i;
+            float laiMoiThang = soTienConlai * 0.05;
+            float tienMoiThang = gocMoiThang + laiMoiThang;
+            printf("ki han %d lai phai tra %.2f goc phai tra %.2f so tien con lai %.2f\n", i,laiMoiThang,gocMoiThang,soTienConlai, soTienConlai);
+            }
             break;
             case 7:
             printf("7.vay tien mua xe\n");
+            float phanTramVay;
+            printf("nhap vao so phan tram vay toi da:");
+            scanf("%f", &phanTramVay);
+            
+            //tinh tien vay
+            float giaXe=500000000;
+            float traTruoc = giaXe * (1-(phanTramVay / 100));
+            float soTienVay= giaXe - traTruoc;
+
+                printf("so tien can truoc la:%.2f\n", traTruoc);
+            for(int i=1;i<=288;i++){
+            //15%năm=0.0125 tháng
+                float laiHangThang = soTienVay*0.0125;//=500000
+                float tienHangThang = (soTienVay/288)+laiHangThang;
+                float tienConLai = soTienVay - tienHangThang*i;
+                printf("thang %d tien lai hang thang %.2f so tien phai tra hang thang %.2f so tien con lai %.2f \n",i,laiHangThang, tienHangThang, tienConLai);
+            }
+            
             break;
             case 8:
             printf("8.xap sep thong tin sinh vien\n");
