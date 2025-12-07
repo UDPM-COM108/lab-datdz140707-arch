@@ -9,6 +9,10 @@ struct sinhVien{
     float diem;
     char hocLuc[10];
 };
+struct phanSo{
+    int tu;
+    int mau;
+};
 int main(){
     do{
     printf("\n|----------------------------------------|\n");
@@ -237,7 +241,8 @@ int main(){
             //in ra danh sach sinh vien va sap xep
             printf("\ndanh sach sinh vien sau khi sap xep la:\n");
             for(s=0;s<sl;s++){
-                printf("\nten sinh vien:%s - tuoi:%d - diem:%.1f - hoc luc:%s\n", sv[s].hoTen, sv[s].tuoi, sv[s].diem, sv[s].hocLuc);
+                printf("\nten sinh vien:%s - tuoi:%d - diem:%.1f - hoc luc:%s\n",
+                     sv[s].hoTen, sv[s].tuoi, sv[s].diem, sv[s].hocLuc);
             }
             
             break;
@@ -258,14 +263,42 @@ int main(){
             }
             printf("\n so trung thuong la:%d", soTrung);
             if(soDoan==soTrung){
-                printf("\nchuc mung ban da trung giai!!!");
+                printf("\nchuc mung ban da trung giai!!!\n");
             }else{
-                printf("\nban da du doan sai, chuc ban may man lan sau");
+                printf("\nban da du doan sai, chuc ban may man lan sau\n");
             }
             break;
             case 10:
             printf("10.tinh toan phan so\n");
+
+            //nhap phan so
+            struct phanSo e,f,tong, hieu, tich, thuong;
+            printf("\nnhap vao tu va mau phan so thu 1:");
+            scanf("%d %d", &e.tu, &e.mau);
+            printf("nhap vao tu va mau phan so thu 2:");
+            scanf("%d %d", &f.tu, &f.mau);
+
+            //tinh toan
+            //tinh tong
+            tong.tu= e.tu* f.mau + f.tu * e.mau;
+            tong.mau= e.mau* f.mau;
+            //tinh hieu
+            hieu.tu= e.tu* f.mau - f.tu*e.mau;
+            hieu.mau= e.mau* f.mau;
+            //tinh tich
+            tich.tu= e.tu* f.tu;
+            tich.mau= e.mau*f.mau;
+            //tich thuong
+            thuong.tu= e.tu* f.mau;
+            thuong.mau= e.mau* f.tu;
+            
+            //in ra ket qua
+            printf("\n tong cua phan so la: %d/%d\n",tong.tu, tong.mau);
+            printf("hieu cua phan sola: %d/%d\n",hieu.tu, hieu.mau);
+            printf("tich cua phan so la:%d/%d\n", tich.tu, tich.mau);
+            printf("thuong cua phan so la:%d/%d\n", thuong.tu, thuong.mau);
             break;
+            
             case 11:
             printf("thoát chương trình\n");
             exit(0);
