@@ -126,16 +126,16 @@ int main(){
             //tinh tien dien
             if(kwh<50){
                 tien=kwh*1.678;
-            }else if(kwh<= 50 && 100>=kwh){
-                tien=kwh*1.734;
-            }else if(kwh<=10 && 200>=kwh){
-                tien=kwh*2.014;
-            }else if(kwh<=201 && 300>=kwh){
-                tien=kwh*2.536;
-            }else if(kwh<=301 && 400>=kwh){
-                tien=kwh*2.834;
+            }else if(kwh<=100){
+                tien=50*1.678+((kwh-50)*1.734);
+            }else if(kwh<=200){
+                tien=50*1.678+50*1.734+((kwh-100)*2.014);
+            }else if(kwh<=300){
+                tien=50*1.678+50*1.734+50*2.014+((kwh-200)*2.536);
+            }else if(kwh<=400){
+                tien=50*1.678+50*1.734+50*2.014+50*2.536+((kwh-300)*2.834);
             }else{
-                tien=kwh*2.927;
+                tien=50*1.678+50*1.734+50*2.014+50*2.536+50*2.834+((kwh-400)*2.927);
             }
             printf("\ngia tien dien cua ban la %.2f\n", tien);
             break;
@@ -146,55 +146,64 @@ int main(){
                 scanf("%d", &soTien);
 
                 //doi tien
-                int menhGia[]={200,200,100,50,20,10,5,2,1};
+                int menhGia[]={200,100,50,20,10,5,2,1};
                 int soLuong,i;
 
-                for(i=0;i<9;i++){
+                //tinh toan va in ket qua 
+                for(i=0;i<8;i++){
                     soLuong=soTien/menhGia[i];
-                    if(soLuong!=0){
+                    if(soLuong>0){
+                        printf("\n%d to %d\n", soLuong, menhGia[i]);
+                        soTien=soTien-(soLuong*menhGia[i]);
                     }
-                    printf("\n%d to %d\n", soLuong, menhGia[i]);
                 }
 
             break;
             case 6:
             printf("6.tinh lay suat ngan hang vay tra gop\n");
             int tienVay;
+            //nhap vao so tien vay va ky han
             printf("\nnhap vao so tien can vay:");
             scanf("%d", &tienVay);
 
             //tinh lai suat
+            printf("\nKy hang\tLai phai tra\t Goc phai tra \t So tien phai tra \t So tien con lại\n");
             for(int i=1;i<=12;i++){
             float gocMoiThang = tienVay / 12;
-            float soTienConlai = tienVay - gocMoiThang * i;
-            float laiMoiThang = soTienConlai * 0.05;
+            float soTienConLai = tienVay - gocMoiThang * (i-1);
+            float laiMoiThang = soTienConLai * 0.05;
             float tienMoiThang = gocMoiThang + laiMoiThang;
-            printf("\nki han %d lai phai tra %.2f goc phai tra %.2f so tien con lai %.2f\n",
-                 i,laiMoiThang,gocMoiThang,soTienConlai, soTienConlai);
+            printf("%d\t %.0f\t\t %.0f\t %.0f\t\t %.0f\n",
+                i,laiMoiThang, gocMoiThang, tienMoiThang, soTienConLai - gocMoiThang);
             }
             break;
             case 7:
             printf("7.vay tien mua xe\n");
             float phanTramVay;
-            printf("\nnhap vao so phan tram vay toi da:");
-            scanf("%f", &phanTramVay);
+            int kyHan;
+            //nhap vao pha tram vay va ky han
+            printf("\nnhap vao so phan tram vay va ky han se tra:");
+            scanf("%f %d", &phanTramVay, &kyHan);
             
             //tinh tien vay
             float giaXe=500000000;
             float soTienVay = giaXe * (phanTramVay / 100);
             float traTruoc= giaXe - soTienVay;
+            printf("\nso tien can truoc la:%.0f\n", traTruoc);
 
-                printf("\nso tien can truoc la:%.0f\n", traTruoc);
-            for(int i=1;i<=288;i++){
+                //tinh 
+            printf("\nKy hang\tLai phai tra\t Goc phai tra \t So tien phai tra \t So tien con lại\n");
+            for(int i=1;i<=kyHan;i++){
                 //15%năm=0.0125 tháng
-                float tienMoiThang= soTienVay/288;
-                float laiHangThang = soTienVay*0.0125;//=500000
-                float tienHangThang = tienMoiThang+laiHangThang;
-                float tienConLai = soTienVay - (tienMoiThang)*i;
-                printf("\nthang %d tien lai hang thang %.0f so tien phai tra hang thang %.0f so tien con lai %.0f \n",
-                    i,laiHangThang, tienHangThang, tienConLai);
-            }
-            
+                float tienMoiThang = soTienVay / kyHan;
+                float soDuDauKy = soTienVay - tienMoiThang * (i - 1);
+                float laiHangThang = soDuDauKy * 0.0125;
+                float tienHangThang = tienMoiThang + laiHangThang;
+                float tienConLai = soDuDauKy - tienMoiThang;
+                //in ket qua
+                printf("%d\t %.0f\t\t %.0f\t %.0f\t\t %.0f\n",
+                    i,laiHangThang,tienMoiThang, tienHangThang, tienConLai);
+            } 
             break;
             case 8:
             printf("8.xap sep thong tin sinh vien\n");
